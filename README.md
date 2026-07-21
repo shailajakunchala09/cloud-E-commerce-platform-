@@ -274,5 +274,6 @@ See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md#security-architecture) for the
 > **Cloud-Native Secure E-Commerce Platform** — Designed and built a full-stack e-commerce platform (Java 17, Spring Boot, Spring Security, PostgreSQL, React) implementing JWT authentication, role-based access control, and a layered service architecture; containerized with Docker and deployed via a GitHub Actions CI/CD pipeline targeting AWS ECS/RDS. Implemented optimistic-locking-protected inventory management, an admin analytics dashboard, and centralized audit logging for security compliance.
 
 ---
-
+## Author
+** kunchala shailaja
 **License:** MIT — see [LICENSE](LICENSE).
