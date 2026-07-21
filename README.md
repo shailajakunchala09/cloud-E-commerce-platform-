@@ -10,25 +10,6 @@ A production-style, full-stack e-commerce application built to demonstrate enter
 
 ---
 
-## Table of Contents
-
-- [Overview](#overview)
-- [Features](#features)
-- [Screenshots](#screenshots)
-- [Technology Stack](#technology-stack)
-- [Architecture](#architecture)
-- [Database Schema](#database-schema)
-- [Getting Started](#getting-started)
-- [API Documentation](#api-documentation)
-- [Testing](#testing)
-- [Docker & Deployment](#docker--deployment)
-- [Project Structure](#project-structure)
-- [Security Highlights](#security-highlights)
-- [Future Enhancements](#future-enhancements)
-- [Resume Description](#resume-description)
-
----
-
 ## Overview
 
 This project simulates a real-world e-commerce backend and admin/customer web experience, covering the full product lifecycle: catalog browsing, cart management, checkout, order tracking, and admin analytics — secured end-to-end with JWT-based authentication and role-based access control.
@@ -65,24 +46,33 @@ It's built to reflect how a professional engineering team would structure the co
 - Async audit logging for security-relevant events
 - OpenAPI/Swagger documentation
 - Dockerized backend, frontend, and database with a single `docker-compose up`
-- GitHub Actions CI (build + test on every push) and a reference CD pipeline to AWS ECS
+- GitHub Actions CI (build + test on every push) and a reference CD pipeline to AWS EC
 
-## Screenshots
+## 📸 Application Screenshots
 
-> The UI shown below is fully implemented in `frontend/src` (React + the design system in `styles/global.css`). These renders were captured from static mockups built with the same components, styles, and layout as the live app, for portfolio presentation — run the app locally (see [Getting Started](#getting-started)) to interact with the real thing end-to-end.
+The screenshots below demonstrate the implemented frontend interface and application workflow.
 
-**Admin Dashboard** — revenue, order, and inventory analytics at a glance
+### 🛠️ Admin Dashboard
 
-![Admin Dashboard](docs/screenshots/admin-dashboard.png)
+![Admin Dashboard](admin-dashboard.png)
 
-**Product Catalog** — customer-facing browsing and search
+Revenue, order, and inventory analytics displayed through the admin interface.
 
-![Product Catalog](docs/screenshots/product-catalog.png)
+---
 
-**Shopping Cart** — quantity management and live price calculation
+### 🛒 Product Catalog
 
-![Shopping Cart](docs/screenshots/shopping-cart.png)
+![Product Catalog](product-catalog.png)
 
+Customer-facing product browsing with search and category filtering.
+
+---
+
+### 🛍️ Shopping Cart
+
+![Shopping Cart](shopping-cart.png)
+
+Cart management with quantity updates and live price calculation.
 ## Technology Stack
 
 **Backend**
