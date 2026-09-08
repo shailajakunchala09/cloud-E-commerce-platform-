@@ -1,13 +1,16 @@
 ```javascript
 import apiClient from "./apiClient";
 
-export const getProducts = (page = 0, size = 12) =>
-  apiClient
+export function getProducts(page = 0, size = 12) {
+  return apiClient
     .get("/products?page=" + page + "&size=" + size)
-    .then((res) => res.data.content || []);
+    .then(function (res) {
+      return res.data.content || [];
+    });
+}
 
-export const searchProducts = (keyword, page = 0, size = 12) =>
-  apiClient
+export function searchProducts(keyword, page = 0, size = 12) {
+  return apiClient
     .get(
       "/products/search?keyword=" +
         encodeURIComponent(keyword) +
@@ -16,10 +19,13 @@ export const searchProducts = (keyword, page = 0, size = 12) =>
         "&size=" +
         size
     )
-    .then((res) => res.data.content || []);
+    .then(function (res) {
+      return res.data.content || [];
+    });
+}
 
-export const getProductsByCategory = (categoryId, page = 0, size = 12) =>
-  apiClient
+export function getProductsByCategory(categoryId, page = 0, size = 12) {
+  return apiClient
     .get(
       "/products/category/" +
         categoryId +
@@ -28,20 +34,36 @@ export const getProductsByCategory = (categoryId, page = 0, size = 12) =>
         "&size=" +
         size
     )
-    .then((res) => res.data.content || []);
+    .then(function (res) {
+      return res.data.content || [];
+    });
+}
 
-export const getProduct = (id) =>
-  apiClient.get("/products/" + id).then((res) => res.data);
+export function getProduct(id) {
+  return apiClient.get("/products/" + id).then(function (res) {
+    return res.data;
+  });
+}
 
-export const createProduct = (payload) =>
-  apiClient.post("/products", payload).then((res) => res.data);
+export function createProduct(payload) {
+  return apiClient.post("/products", payload).then(function (res) {
+    return res.data;
+  });
+}
 
-export const updateProduct = (id, payload) =>
-  apiClient.put("/products/" + id, payload).then((res) => res.data);
+export function updateProduct(id, payload) {
+  return apiClient.put("/products/" + id, payload).then(function (res) {
+    return res.data;
+  });
+}
 
-export const deleteProduct = (id) =>
-  apiClient.delete("/products/" + id);
+export function deleteProduct(id) {
+  return apiClient.delete("/products/" + id);
+}
 
-export const getCategories = () =>
-  apiClient.get("/categories").then((res) => res.data);
+export function getCategories() {
+  return apiClient.get("/categories").then(function (res) {
+    return res.data;
+  });
+}
 ```
