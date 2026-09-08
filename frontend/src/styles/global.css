@@ -1,97 +1,187 @@
-/* ============================================================
-   Design tokens
-   Ink:      #0F1B2D  (near-navy, primary text/dark surfaces)
-   Surface:  #F5F7FA  (cool gray-blue background, not cream)
-   Card:     #FFFFFF
-   Brand:    #2454FF  (electric indigo - primary actions, links)
-   Accent:   #FF7A45  (warm coral - price tags, CTAs)
-   Success:  #16A34A  (in stock, delivered)
-   Warning:  #D97706  (low stock, pending)
-   Danger:   #DC2626  (out of stock, cancelled)
-   Display font: 'Space Grotesk' - geometric, confident, used for headings
-   Body font:    'Inter' - neutral, highly legible
-   Data font:    'IBM Plex Mono' - tabular figures for prices & dashboard KPIs
-   ============================================================ */
-
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap');
 
 :root {
-  --ink: #0F1B2D;
-  --ink-soft: #4B5768;
-  --surface: #F5F7FA;
-  --card: #FFFFFF;
-  --border: #E2E7EE;
-  --brand: #2454FF;
-  --brand-dark: #1739B8;
-  --accent: #FF7A45;
-  --success: #16A34A;
-  --success-bg: #E8F8EE;
-  --warning: #D97706;
-  --warning-bg: #FEF3E2;
-  --danger: #DC2626;
-  --danger-bg: #FDEAEA;
+  --ink: #ffffff;
+  --ink-soft: #a7b0c0;
+
+  --surface: #000000;
+  --surface-soft: #0a0a0a;
+
+  --card: #111111;
+  --card-hover: #171717;
+
+  --border: #292929;
+
+  --brand: #2454ff;
+  --brand-dark: #1739b8;
+
+  --accent: #ff7a45;
+
+  --success: #22c55e;
+  --success-bg: #0b2414;
+
+  --warning: #f59e0b;
+  --warning-bg: #2a1d05;
+
+  --danger: #ef4444;
+  --danger-bg: #2a0d0d;
 
   --font-display: 'Space Grotesk', sans-serif;
   --font-body: 'Inter', sans-serif;
   --font-data: 'IBM Plex Mono', monospace;
 
   --radius: 10px;
-  --shadow-sm: 0 1px 2px rgba(15, 27, 45, 0.06);
-  --shadow-md: 0 4px 16px rgba(15, 27, 45, 0.08);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.6);
 }
 
-* { box-sizing: border-box; }
+/* =========================
+   GLOBAL
+   ========================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: #000000;
+}
 
 body {
   margin: 0;
-  background: var(--surface);
-  color: var(--ink);
+  min-height: 100vh;
+  background: #000000;
+  color: #ffffff;
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4 {
+#root {
+  min-height: 100vh;
+  background: #000000;
+}
+
+/* =========================
+   HEADINGS
+   ========================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  color: #ffffff;
   font-family: var(--font-display);
   font-weight: 600;
   letter-spacing: -0.01em;
-  margin: 0;
 }
 
-a { color: var(--brand); text-decoration: none; }
-a:hover { text-decoration: underline; }
+/* =========================
+   LINKS
+   ========================= */
+
+a {
+  color: #5f83ff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* =========================
+   CONTAINER
+   ========================= */
 
 .container {
+  width: 100%;
   max-width: 1180px;
   margin: 0 auto;
   padding: 0 24px;
 }
 
-/* ---------- Buttons ---------- */
+/* =========================
+   BUTTONS
+   ========================= */
+
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  font-family: var(--font-body);
-  font-weight: 600;
-  font-size: 14px;
-  padding: 10px 18px;
-  border-radius: var(--radius);
-  border: 1px solid transparent;
-  cursor: pointer;
-  transition: transform 0.06s ease, box-shadow 0.15s ease, background 0.15s ease;
-}
-.btn:active { transform: translateY(1px); }
-.btn-primary { background: var(--brand); color: #fff; }
-.btn-primary:hover { background: var(--brand-dark); text-decoration: none; }
-.btn-accent { background: var(--accent); color: #fff; }
-.btn-accent:hover { background: #E8632E; text-decoration: none; }
-.btn-outline { background: transparent; border-color: var(--border); color: var(--ink); }
-.btn-outline:hover { border-color: var(--brand); color: var(--brand); text-decoration: none; }
-.btn-danger { background: var(--danger-bg); color: var(--danger); }
-.btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-/* ---------- Cards ---------- */
+  padding: 10px 18px;
+
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.06s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background: var(--brand);
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background: var(--brand-dark);
+  text-decoration: none;
+}
+
+.btn-accent {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.btn-accent:hover {
+  background: #e8632e;
+  text-decoration: none;
+}
+
+.btn-outline {
+  background: transparent;
+  border-color: #3a3a3a;
+  color: #ffffff;
+}
+
+.btn-outline:hover {
+  background: #111111;
+  border-color: var(--brand);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.btn-danger {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* =========================
+   CARDS
+   ========================= */
+
 .card {
   background: var(--card);
   border: 1px solid var(--border);
@@ -99,86 +189,230 @@ a:hover { text-decoration: underline; }
   box-shadow: var(--shadow-sm);
 }
 
-/* ---------- Forms ---------- */
-.field { margin-bottom: 16px; }
-.field label {
-  display: block;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--ink-soft);
-  margin-bottom: 6px;
-}
-.field input, .field select, .field textarea {
-  width: 100%;
-  padding: 10px 12px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  font-family: var(--font-body);
-  font-size: 14px;
-  background: #fff;
-  color: var(--ink);
-}
-.field input:focus, .field select:focus, .field textarea:focus {
-  outline: none;
-  border-color: var(--brand);
-  box-shadow: 0 0 0 3px rgba(36, 84, 255, 0.12);
+.card:hover {
+  background: var(--card-hover);
+  box-shadow: var(--shadow-md);
 }
 
-/* ---------- Badges (order status, stock) ---------- */
+/* =========================
+   FORMS
+   ========================= */
+
+.field {
+  margin-bottom: 16px;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 6px;
+
+  color: var(--ink-soft);
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+
+  padding: 10px 12px;
+
+  background: #111111;
+  color: #ffffff;
+
+  border: 1px solid #333333;
+  border-radius: 8px;
+
+  font-family: var(--font-body);
+  font-size: 14px;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: #737373;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+
+  border-color: var(--brand);
+
+  box-shadow: 0 0 0 3px rgba(36, 84, 255, 0.2);
+}
+
+/* =========================
+   BADGES
+   ========================= */
+
 .badge {
   display: inline-block;
+
+  padding: 3px 9px;
+
+  border-radius: 999px;
+
+  font-family: var(--font-data);
   font-size: 12px;
   font-weight: 600;
-  font-family: var(--font-data);
-  padding: 3px 9px;
-  border-radius: 999px;
+
   text-transform: uppercase;
   letter-spacing: 0.03em;
 }
-.badge-success { background: var(--success-bg); color: var(--success); }
-.badge-warning { background: var(--warning-bg); color: var(--warning); }
-.badge-danger { background: var(--danger-bg); color: var(--danger); }
-.badge-neutral { background: #EEF1F5; color: var(--ink-soft); }
 
-/* ---------- Price (signature element: mono figures + accent tag) ---------- */
+.badge-success {
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.badge-warning {
+  background: var(--warning-bg);
+  color: var(--warning);
+}
+
+.badge-danger {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+.badge-neutral {
+  background: #222222;
+  color: var(--ink-soft);
+}
+
+/* =========================
+   PRICE
+   ========================= */
+
 .price {
+  color: #ffffff;
+
   font-family: var(--font-data);
   font-weight: 600;
-  color: var(--ink);
 }
+
 .price-tag {
   display: inline-flex;
   align-items: baseline;
   gap: 2px;
+
+  color: var(--accent);
+
   font-family: var(--font-data);
   font-weight: 600;
-  color: var(--accent);
 }
 
-/* ---------- Data / KPI numbers ---------- */
+/* =========================
+   KPI
+   ========================= */
+
 .kpi-value {
+  color: #ffffff;
+
   font-family: var(--font-data);
   font-size: 30px;
   font-weight: 600;
-  color: var(--ink);
 }
+
 .kpi-label {
+  color: var(--ink-soft);
+
   font-size: 12px;
   font-weight: 600;
-  color: var(--ink-soft);
+
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 
-/* ---------- Utility ---------- */
-.flex { display: flex; }
-.flex-between { display: flex; align-items: center; justify-content: space-between; }
-.grid { display: grid; gap: 20px; }
-.muted { color: var(--ink-soft); }
-.text-center { text-align: center; }
-.mt-24 { margin-top: 24px; }
-.mb-16 { margin-bottom: 16px; }
+/* =========================
+   UTILITY
+   ========================= */
+
+.flex {
+  display: flex;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.grid {
+  display: grid;
+  gap: 20px;
+}
+
+.muted {
+  color: var(--ink-soft);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mt-24 {
+  margin-top: 24px;
+}
+
+.mb-16 {
+  margin-bottom: 16px;
+}
+
+/* =========================
+   SCROLLBAR
+   ========================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333333;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555555;
+}
+
+/* =========================
+   TEXT SELECTION
+   ========================= */
+
+::selection {
+  background: #2454ff;
+  color: #ffffff;
+}
+
+/* =========================
+   REDUCED MOTION
+   ========================= */
 
 @media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; animation: none !important; }
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 16px;
+  }
+
+  .kpi-value {
+    font-size: 26px;
+  }
 }
