@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:ecommerce_db;MODE=PostgreSQL;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    database-platform: org.hibernate.dialect.H2Dialect
+
+  flyway:
+    locations: classpath:db/migration-h2
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+logging:
+  level:
+    com.ecommerce.platform: DEBUG

@@ -1,0 +1,184 @@
+/* ============================================================
+   Design tokens
+   Ink:      #0F1B2D  (near-navy, primary text/dark surfaces)
+   Surface:  #F5F7FA  (cool gray-blue background, not cream)
+   Card:     #FFFFFF
+   Brand:    #2454FF  (electric indigo - primary actions, links)
+   Accent:   #FF7A45  (warm coral - price tags, CTAs)
+   Success:  #16A34A  (in stock, delivered)
+   Warning:  #D97706  (low stock, pending)
+   Danger:   #DC2626  (out of stock, cancelled)
+   Display font: 'Space Grotesk' - geometric, confident, used for headings
+   Body font:    'Inter' - neutral, highly legible
+   Data font:    'IBM Plex Mono' - tabular figures for prices & dashboard KPIs
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+:root {
+  --ink: #0F1B2D;
+  --ink-soft: #4B5768;
+  --surface: #F5F7FA;
+  --card: #FFFFFF;
+  --border: #E2E7EE;
+  --brand: #2454FF;
+  --brand-dark: #1739B8;
+  --accent: #FF7A45;
+  --success: #16A34A;
+  --success-bg: #E8F8EE;
+  --warning: #D97706;
+  --warning-bg: #FEF3E2;
+  --danger: #DC2626;
+  --danger-bg: #FDEAEA;
+
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-data: 'IBM Plex Mono', monospace;
+
+  --radius: 10px;
+  --shadow-sm: 0 1px 2px rgba(15, 27, 45, 0.06);
+  --shadow-md: 0 4px 16px rgba(15, 27, 45, 0.08);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+a { color: var(--brand); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 18px;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 0.06s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+.btn:active { transform: translateY(1px); }
+.btn-primary { background: var(--brand); color: #fff; }
+.btn-primary:hover { background: var(--brand-dark); text-decoration: none; }
+.btn-accent { background: var(--accent); color: #fff; }
+.btn-accent:hover { background: #E8632E; text-decoration: none; }
+.btn-outline { background: transparent; border-color: var(--border); color: var(--ink); }
+.btn-outline:hover { border-color: var(--brand); color: var(--brand); text-decoration: none; }
+.btn-danger { background: var(--danger-bg); color: var(--danger); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ---------- Cards ---------- */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ---------- Forms ---------- */
+.field { margin-bottom: 16px; }
+.field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+.field input, .field select, .field textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  font-family: var(--font-body);
+  font-size: 14px;
+  background: #fff;
+  color: var(--ink);
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(36, 84, 255, 0.12);
+}
+
+/* ---------- Badges (order status, stock) ---------- */
+.badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--font-data);
+  padding: 3px 9px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.badge-success { background: var(--success-bg); color: var(--success); }
+.badge-warning { background: var(--warning-bg); color: var(--warning); }
+.badge-danger { background: var(--danger-bg); color: var(--danger); }
+.badge-neutral { background: #EEF1F5; color: var(--ink-soft); }
+
+/* ---------- Price (signature element: mono figures + accent tag) ---------- */
+.price {
+  font-family: var(--font-data);
+  font-weight: 600;
+  color: var(--ink);
+}
+.price-tag {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
+  font-family: var(--font-data);
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* ---------- Data / KPI numbers ---------- */
+.kpi-value {
+  font-family: var(--font-data);
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.kpi-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- Utility ---------- */
+.flex { display: flex; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.grid { display: grid; gap: 20px; }
+.muted { color: var(--ink-soft); }
+.text-center { text-align: center; }
+.mt-24 { margin-top: 24px; }
+.mb-16 { margin-bottom: 16px; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
