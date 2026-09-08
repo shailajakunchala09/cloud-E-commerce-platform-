@@ -127,7 +127,8 @@ public class SecurityConfig {
         configuration.setAllowedOriginPatterns(List.of(
                 "http://localhost:3000",
                 "http://localhost:3001",
-                "https://*.yourdomain.com"
+                "https://*.yourdomain.com",
+                "https://ecommerce-frontend-347x.onrender.com"
         ));
 
         configuration.setAllowedMethods(List.of(
