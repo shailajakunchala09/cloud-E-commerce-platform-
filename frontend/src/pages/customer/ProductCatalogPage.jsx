@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import * as productApi from "../../api/productApi";
 import ProductCard from "../../components/common/ProductCard";
 import Loading from "../../components/common/Loading";
@@ -13,7 +13,7 @@ export default function ProductCatalogPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const loadProducts = useCallback(async () => {
+  async function loadProducts() {
     setLoading(true);
     setError("");
 
@@ -30,26 +30,35 @@ export default function ProductCatalogPage() {
 
       setPageData(data);
     } catch (err) {
-      setError("Could not load products. Is the backend running?");
+      console.error("Product loading error:", err);
+      setError(
+        err.response?.data?.message ||
+          err.message ||
+          "Could not load products."
+      );
+      setPageData(null);
     } finally {
       setLoading(false);
     }
-  }, [page, activeCategory, keyword]);
+  }
 
   useEffect(() => {
-    productApi.getCategories().then(setCategories).catch(() => {});
+    productApi
+      .getCategories()
+      .then((data) => setCategories(data))
+      .catch((err) => console.error("Category loading error:", err));
   }, []);
 
   useEffect(() => {
     loadProducts();
-  }, [loadProducts]);
+  }, [page, activeCategory]);
 
-  const handleSearch = (e) => {
+  function handleSearch(e) {
     e.preventDefault();
     setPage(0);
     setActiveCategory(null);
     loadProducts();
-  };
+  }
 
   return (
     <div>
@@ -95,19 +104,21 @@ export default function ProductCatalogPage() {
           All
         </button>
 
-        {categories.map((c) => (
+        {categories.map((category) => (
           <button
-            key={c.id}
+            key={category.id}
             className={`btn ${
-              activeCategory === c.id ? "btn-primary" : "btn-outline"
+              activeCategory === category.id
+                ? "btn-primary"
+                : "btn-outline"
             }`}
             onClick={() => {
-              setActiveCategory(c.id);
+              setActiveCategory(category.id);
               setKeyword("");
               setPage(0);
             }}
           >
-            {c.name}
+            {category.name}
           </button>
         ))}
       </div>
@@ -126,7 +137,10 @@ export default function ProductCatalogPage() {
             }}
           >
             {pageData?.content?.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard
+                key={product.id}
+                product={product}
+              />
             ))}
           </div>
 
