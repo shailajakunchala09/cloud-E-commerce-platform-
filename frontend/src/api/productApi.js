@@ -1,11 +1,10 @@
-```javascript
 import apiClient from "./apiClient";
 
 export function getProducts(page = 0, size = 12) {
   return apiClient
     .get("/products?page=" + page + "&size=" + size)
     .then(function (res) {
-      return res.data.content || [];
+      return res.data;
     });
 }
 
@@ -20,7 +19,7 @@ export function searchProducts(keyword, page = 0, size = 12) {
         size
     )
     .then(function (res) {
-      return res.data.content || [];
+      return res.data;
     });
 }
 
@@ -35,7 +34,7 @@ export function getProductsByCategory(categoryId, page = 0, size = 12) {
         size
     )
     .then(function (res) {
-      return res.data.content || [];
+      return res.data;
     });
 }
 
@@ -66,4 +65,3 @@ export function getCategories() {
     return res.data;
   });
 }
-```
