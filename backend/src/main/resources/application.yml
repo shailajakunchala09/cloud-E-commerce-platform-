@@ -3,19 +3,20 @@ spring:
     name: cloud-native-ecommerce-platform
 
   profiles:
-    active: ${SPRING_PROFILES_ACTIVE:dev}
+    active: ${SPRING_PROFILES_ACTIVE:prod}
 
   datasource:
     url: ${DB_URL:jdbc:postgresql://localhost:5432/ecommerce_db}
     username: ${DB_USERNAME:ecommerce_user}
     password: ${DB_PASSWORD:changeme}
+    driver-class-name: org.postgresql.Driver
     hikari:
       maximum-pool-size: 10
       minimum-idle: 2
 
   jpa:
     hibernate:
-      ddl-auto: validate   # schema is owned by Flyway migrations, not Hibernate auto-DDL
+      ddl-auto: validate
     show-sql: false
     open-in-view: false
     properties:
@@ -32,13 +33,13 @@ spring:
 server:
   port: ${SERVER_PORT:8080}
   error:
-    include-message: never   # never leak stack traces / raw messages to clients
+    include-message: never
     include-stacktrace: never
 
 app:
   jwt:
     secret: ${JWT_SECRET:CHANGE_THIS_TO_A_LONG_RANDOM_256_BIT_SECRET_IN_PRODUCTION_ENV_VARS}
-    expiration-ms: ${JWT_EXPIRATION_MS:86400000}   # 24h
+    expiration-ms: ${JWT_EXPIRATION_MS:86400000}
 
 springdoc:
   swagger-ui:
@@ -51,6 +52,7 @@ management:
     web:
       exposure:
         include: health,info
+
   endpoint:
     health:
       show-details: never
@@ -60,5 +62,6 @@ logging:
     root: INFO
     com.ecommerce.platform: DEBUG
     org.hibernate.SQL: WARN
+
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
