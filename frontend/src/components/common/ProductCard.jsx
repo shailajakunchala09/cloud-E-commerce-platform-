@@ -3,31 +3,90 @@ import { Link } from "react-router-dom";
 import { formatCurrency } from "../../utils/formatCurrency";
 
 export default function ProductCard({ product }) {
-  const lowStock = product.stockQuantity > 0 && product.stockQuantity <= 10;
+  const lowStock =
+    product.stockQuantity > 0 &&
+    product.stockQuantity <= 10;
 
   return (
-    <Link to={`/products/${product.id}`} className="card" style={{ overflow: "hidden", display: "block", color: "inherit" }}>
-      <div style={{ aspectRatio: "4 / 3", background: "#EEF1F5", overflow: "hidden" }}>
-        {product.imageUrl && (
-          <img src={product.imageUrl} alt={product.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+    <Link
+      to={`/products/${product.id}`}
+      className="premium-product-card"
+    >
+      {/* IMAGE */}
+      <div className="premium-product-image">
+        {product.imageUrl ? (
+          <img
+            src={product.imageUrl}
+            alt={product.name}
+            className="premium-product-img"
+          />
+        ) : (
+          <div className="premium-image-placeholder">
+            <span>PRODUCT</span>
+          </div>
         )}
+
+        {/* TOP BADGE */}
+        {lowStock && product.inStock && (
+          <span className="premium-stock-badge">
+            LOW STOCK
+          </span>
+        )}
+
+        {!product.inStock && (
+          <span className="premium-sold-badge">
+            SOLD OUT
+          </span>
+        )}
+
+        {/* VIEW BUTTON */}
+        <div className="premium-view-button">
+          <span>View product</span>
+          <span>↗</span>
+        </div>
       </div>
-      <div style={{ padding: 16 }}>
+
+      {/* DETAILS */}
+      <div className="premium-product-info">
+
         {product.categoryName && (
-          <div className="muted" style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 4 }}>
+          <div className="premium-product-category">
             {product.categoryName}
           </div>
         )}
-        <div style={{ fontWeight: 600, fontSize: 15, marginBottom: 8, lineHeight: 1.3 }}>{product.name}</div>
-        <div className="flex-between">
-          <span className="price-tag" style={{ fontSize: 17 }}>{formatCurrency(product.price)}</span>
-          {!product.inStock ? (
-            <span className="badge badge-danger">Out of stock</span>
-          ) : lowStock ? (
-            <span className="badge badge-warning">Low stock</span>
-          ) : (
-            <span className="badge badge-success">In stock</span>
-          )}
+
+        <h3 className="premium-product-title">
+          {product.name}
+        </h3>
+
+        {product.description && (
+          <p className="premium-product-description">
+            {product.description}
+          </p>
+        )}
+
+        <div className="premium-product-footer">
+          <div className="premium-product-price">
+            {formatCurrency(product.price)}
+          </div>
+
+          <div
+            className={`premium-stock-status ${
+              !product.inStock
+                ? "sold"
+                : lowStock
+                ? "low"
+                : "available"
+            }`}
+          >
+            <span className="status-dot" />
+
+            {product.inStock
+              ? lowStock
+                ? `${product.stockQuantity} left`
+                : "Available"
+              : "Unavailable"}
+          </div>
         </div>
       </div>
     </Link>

@@ -14,41 +14,33 @@ export default function Navbar() {
   };
 
   return (
-    <header style={{ background: "var(--ink)", borderBottom: "1px solid var(--border)" }}>
-      <div className="container flex-between" style={{ height: 64 }}>
-        <Link to="/" style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
-          <span style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 20, color: "#fff" }}>
-            Nimbus
-          </span>
-          <span style={{ fontFamily: "var(--font-data)", fontSize: 12, color: "var(--accent)" }}>
-            /commerce
-          </span>
+    <header className="premium-navbar">
+      <div className="premium-navbar-inner">
+
+        {/* BRAND */}
+        <Link to="/" className="premium-brand">
+          <span className="premium-brand-main">Nimbus</span>
+          <span className="premium-brand-sub">/commerce</span>
         </Link>
 
-        <nav className="flex" style={{ gap: 22, alignItems: "center" }}>
-          <Link to="/" style={{ color: "#DCE3F0", fontSize: 14, fontWeight: 500 }}>
-            Catalog
+        {/* NAVIGATION */}
+        <nav className="premium-nav">
+
+          <Link to="/" className="premium-nav-link active">
+            Shop
           </Link>
 
           {isAuthenticated && !isAdmin && (
             <>
-              <Link to="/orders" style={{ color: "#DCE3F0", fontSize: 14, fontWeight: 500 }}>
-                My Orders
+              <Link to="/orders" className="premium-nav-link">
+                Orders
               </Link>
-              <Link to="/cart" style={{ color: "#DCE3F0", fontSize: 14, fontWeight: 500, position: "relative" }}>
-                Cart
+
+              <Link to="/cart" className="premium-cart-link">
+                <span>Cart</span>
+
                 {itemCount > 0 && (
-                  <span
-                    style={{
-                      marginLeft: 6,
-                      background: "var(--accent)",
-                      color: "#fff",
-                      borderRadius: 999,
-                      fontSize: 11,
-                      fontFamily: "var(--font-data)",
-                      padding: "1px 7px",
-                    }}
-                  >
+                  <span className="premium-cart-count">
                     {itemCount}
                   </span>
                 )}
@@ -57,30 +49,54 @@ export default function Navbar() {
           )}
 
           {isAdmin && (
-            <Link to="/admin" style={{ color: "#DCE3F0", fontSize: 14, fontWeight: 500 }}>
-              Admin Dashboard
+            <Link to="/admin" className="premium-nav-link">
+              Admin
             </Link>
           )}
 
+          <span className="premium-nav-divider" />
+
           {isAuthenticated ? (
-            <div className="flex" style={{ gap: 12, alignItems: "center" }}>
-              <Link to="/profile" style={{ color: "#8FA0BD", fontSize: 13 }}>
-                {user.fullName}
+            <div className="premium-user-area">
+
+              <Link to="/profile" className="premium-profile">
+                <span className="premium-avatar">
+                  {user?.fullName?.charAt(0)?.toUpperCase() || "U"}
+                </span>
+
+                <span className="premium-user-name">
+                  {user?.fullName || "Account"}
+                </span>
               </Link>
-              <button className="btn btn-outline" style={{ borderColor: "#2C3B54", color: "#DCE3F0" }} onClick={handleLogout}>
+
+              <button
+                onClick={handleLogout}
+                className="premium-login-button"
+              >
                 Log out
               </button>
+
             </div>
           ) : (
-            <div className="flex" style={{ gap: 10 }}>
-              <Link to="/login" className="btn btn-outline" style={{ borderColor: "#2C3B54", color: "#DCE3F0" }}>
+            <div className="premium-auth-area">
+
+              <Link
+                to="/login"
+                className="premium-login-button"
+              >
                 Log in
               </Link>
-              <Link to="/register" className="btn btn-accent">
-                Sign up
+
+              <Link
+                to="/register"
+                className="premium-signup-button"
+              >
+                Create account
               </Link>
+
             </div>
           )}
+
         </nav>
       </div>
     </header>

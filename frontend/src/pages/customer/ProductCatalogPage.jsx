@@ -31,11 +31,13 @@ export default function ProductCatalogPage() {
       setPageData(data);
     } catch (err) {
       console.error("Product loading error:", err);
+
       setError(
         err.response?.data?.message ||
           err.message ||
           "Could not load products."
       );
+
       setPageData(null);
     } finally {
       setLoading(false);
@@ -46,7 +48,9 @@ export default function ProductCatalogPage() {
     productApi
       .getCategories()
       .then((data) => setCategories(data))
-      .catch((err) => console.error("Category loading error:", err));
+      .catch((err) =>
+        console.error("Category loading error:", err)
+      );
   }, []);
 
   useEffect(() => {
@@ -60,124 +64,261 @@ export default function ProductCatalogPage() {
     loadProducts();
   }
 
-  return (
-    <div>
-      <div
-        className="flex-between mb-16"
-        style={{ flexWrap: "wrap", gap: 12 }}
-      >
-        <h2>Catalog</h2>
+  function handleCategory(categoryId) {
+    setActiveCategory(categoryId);
+    setKeyword("");
+    setPage(0);
+  }
 
-        <form onSubmit={handleSearch} className="flex" style={{ gap: 8 }}>
+  return (
+    <main className="storefront">
+
+      {/* HERO */}
+      <section className="storefront-hero">
+        <div className="hero-copy">
+          <div className="hero-eyebrow">
+            NIMBUS COMMERCE
+          </div>
+
+          <h1>
+            Objects worth
+            <br />
+            <span>keeping.</span>
+          </h1>
+
+          <p>
+            A curated collection of thoughtfully selected
+            essentials for modern living.
+          </p>
+
+          <a href="#products" className="hero-cta">
+            Explore collection
+            <span>↓</span>
+          </a>
+        </div>
+
+        <div className="hero-visual">
+          <div className="hero-orbit hero-orbit-one" />
+          <div className="hero-orbit hero-orbit-two" />
+
+          <div className="hero-glass">
+            <span>CURATED</span>
+            <strong>01</strong>
+          </div>
+
+          <div className="hero-symbol">
+            N
+          </div>
+        </div>
+      </section>
+
+      {/* SEARCH */}
+      <section className="storefront-tools">
+        <div>
+          <div className="section-kicker">
+            DISCOVER
+          </div>
+
+          <h2>
+            Find something
+            <br />
+            <span>exceptional.</span>
+          </h2>
+        </div>
+
+        <form
+          onSubmit={handleSearch}
+          className="premium-search"
+        >
+          <span className="search-icon">⌕</span>
+
           <input
-            placeholder="Search products..."
+            type="text"
+            placeholder="Search products, categories..."
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
-            style={{
-              padding: "9px 12px",
-              borderRadius: 8,
-              border: "1px solid var(--border)",
-              width: 240,
-            }}
           />
 
-          <button className="btn btn-primary" type="submit">
+          {keyword && (
+            <button
+              type="button"
+              className="search-clear"
+              onClick={() => {
+                setKeyword("");
+                setPage(0);
+                setActiveCategory(null);
+              }}
+            >
+              ×
+            </button>
+          )}
+
+          <button type="submit">
             Search
           </button>
         </form>
-      </div>
+      </section>
 
-      <div
-        className="flex mb-16"
-        style={{ gap: 8, flexWrap: "wrap" }}
-      >
-        <button
-          className={`btn ${
-            !activeCategory ? "btn-primary" : "btn-outline"
-          }`}
-          onClick={() => {
-            setActiveCategory(null);
-            setKeyword("");
-            setPage(0);
-          }}
-        >
-          All
-        </button>
+      {/* CATEGORIES */}
+      <section className="category-section">
+        <div className="category-heading">
+          <span>SHOP BY CATEGORY</span>
+          <small>
+            {pageData?.totalElements || 0} products
+          </small>
+        </div>
 
-        {categories.map((category) => (
+        <div className="category-list">
           <button
-            key={category.id}
-            className={`btn ${
-              activeCategory === category.id
-                ? "btn-primary"
-                : "btn-outline"
+            className={`category-chip ${
+              !activeCategory ? "active" : ""
             }`}
-            onClick={() => {
-              setActiveCategory(category.id);
-              setKeyword("");
-              setPage(0);
-            }}
+            onClick={() => handleCategory(null)}
           >
-            {category.name}
+            <span>01</span>
+            All products
           </button>
-        ))}
-      </div>
 
-      <ErrorBanner message={error} />
-
-      {loading ? (
-        <Loading />
-      ) : (
-        <>
-          <div
-            className="grid"
-            style={{
-              gridTemplateColumns:
-                "repeat(auto-fill, minmax(220px, 1fr))",
-            }}
-          >
-            {pageData?.content?.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-              />
-            ))}
-          </div>
-
-          {pageData?.content?.length === 0 && (
-            <p
-              className="muted text-center"
-              style={{ padding: 48 }}
+          {categories.map((category, index) => (
+            <button
+              key={category.id}
+              className={`category-chip ${
+                activeCategory === category.id ? "active" : ""
+              }`}
+              onClick={() =>
+                handleCategory(category.id)
+              }
             >
-              No products found.
-            </p>
-          )}
-
-          {pageData && pageData.totalPages > 1 && (
-            <div className="flex-between mt-24">
-              <button
-                className="btn btn-outline"
-                disabled={page === 0}
-                onClick={() => setPage((p) => p - 1)}
-              >
-                Previous
-              </button>
-
-              <span className="muted">
-                Page {page + 1} of {pageData.totalPages}
+              <span>
+                {String(index + 2).padStart(2, "0")}
               </span>
 
-              <button
-                className="btn btn-outline"
-                disabled={page + 1 >= pageData.totalPages}
-                onClick={() => setPage((p) => p + 1)}
-              >
-                Next
-              </button>
+              {category.name}
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {/* PRODUCTS */}
+      <section
+        className="products-section"
+        id="products"
+      >
+        <div className="products-header">
+          <div>
+            <div className="section-kicker">
+              THE COLLECTION
             </div>
-          )}
-        </>
-      )}
-    </div>
+
+            <h2>
+              Featured
+              <span> products.</span>
+            </h2>
+          </div>
+
+          <div className="collection-meta">
+            <span>
+              {pageData?.totalElements || 0}
+            </span>
+            ITEMS
+          </div>
+        </div>
+
+        <ErrorBanner message={error} />
+
+        {loading ? (
+          <div className="premium-loading">
+            <div className="loading-line" />
+            <div className="loading-line short" />
+            <span>Curating collection...</span>
+          </div>
+        ) : (
+          <>
+            <div className="premium-product-grid">
+              {pageData?.content?.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                />
+              ))}
+            </div>
+
+            {pageData?.content?.length === 0 && (
+              <div className="empty-products">
+                <div>○</div>
+                <h3>No products found</h3>
+                <p>
+                  Try another search or explore a
+                  different category.
+                </p>
+              </div>
+            )}
+
+            {pageData &&
+              pageData.totalPages > 1 && (
+                <div className="premium-pagination">
+                  <button
+                    disabled={page === 0}
+                    onClick={() =>
+                      setPage((p) => p - 1)
+                    }
+                  >
+                    ← Previous
+                  </button>
+
+                  <div>
+                    <span>
+                      {String(page + 1).padStart(2, "0")}
+                    </span>
+
+                    <i>/</i>
+
+                    {String(
+                      pageData.totalPages
+                    ).padStart(2, "0")}
+                  </div>
+
+                  <button
+                    disabled={
+                      page + 1 >=
+                      pageData.totalPages
+                    }
+                    onClick={() =>
+                      setPage((p) => p + 1)
+                    }
+                  >
+                    Next →
+                  </button>
+                </div>
+              )}
+          </>
+        )}
+      </section>
+
+      {/* BRAND STATEMENT */}
+      <section className="brand-statement">
+        <div className="brand-number">
+          N/01
+        </div>
+
+        <div>
+          <div className="section-kicker">
+            THE NIMBUS STANDARD
+          </div>
+
+          <h2>
+            Less noise.
+            <br />
+            <span>Better choices.</span>
+          </h2>
+        </div>
+
+        <p>
+          We believe great commerce should feel
+          effortless. Every product belongs for a reason.
+        </p>
+      </section>
+
+    </main>
   );
 }
