@@ -43,21 +43,26 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
         http
                 .csrf(csrf -> csrf.disable())
 
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .cors(cors ->
+                        cors.configurationSource(corsConfigurationSource())
+                )
 
                 .sessionManagement(sm ->
                         sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
 
                 .authorizeHttpRequests(auth -> auth
+
                         .requestMatchers(
                                 "GET",
                                 "/api/products/**",
                                 "/api/categories/**"
-                        ).permitAll()
+                        )
+                        .permitAll()
 
                         .requestMatchers(
                                 "/api/auth/**",
@@ -65,7 +70,8 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
                                 "/actuator/health"
-                        ).permitAll()
+                        )
+                        .permitAll()
 
                         .requestMatchers("/api/admin/**")
                         .hasRole("ADMIN")
@@ -97,6 +103,7 @@ public class SecurityConfig {
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
+
         DaoAuthenticationProvider provider =
                 new DaoAuthenticationProvider();
 
@@ -110,11 +117,13 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration config
     ) throws Exception {
+
         return config.getAuthenticationManager();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
+
         return new BCryptPasswordEncoder(12);
     }
 
@@ -124,10 +133,18 @@ public class SecurityConfig {
         CorsConfiguration configuration =
                 new CorsConfiguration();
 
+        /*
+         * Allow React development servers running
+         * on any localhost port.
+         *
+         * Examples:
+         * http://localhost:3000
+         * http://localhost:3001
+         * http://localhost:3002
+         * http://localhost:3003
+         */
         configuration.setAllowedOriginPatterns(List.of(
-                "http://localhost:3000",
-                "http://localhost:3001",
-                "https://*.yourdomain.com",
+                "http://localhost:*",
                 "https://ecommerce-frontend-347x.onrender.com"
         ));
 

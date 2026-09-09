@@ -1,184 +1,511 @@
-/* ============================================================
-   Design tokens
-   Ink:      #0F1B2D  (near-navy, primary text/dark surfaces)
-   Surface:  #F5F7FA  (cool gray-blue background, not cream)
-   Card:     #FFFFFF
-   Brand:    #2454FF  (electric indigo - primary actions, links)
-   Accent:   #FF7A45  (warm coral - price tags, CTAs)
-   Success:  #16A34A  (in stock, delivered)
-   Warning:  #D97706  (low stock, pending)
-   Danger:   #DC2626  (out of stock, cancelled)
-   Display font: 'Space Grotesk' - geometric, confident, used for headings
-   Body font:    'Inter' - neutral, highly legible
-   Data font:    'IBM Plex Mono' - tabular figures for prices & dashboard KPIs
-   ============================================================ */
-
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap');
 
 :root {
-  --ink: #0F1B2D;
-  --ink-soft: #4B5768;
-  --surface: #F5F7FA;
-  --card: #FFFFFF;
-  --border: #E2E7EE;
-  --brand: #2454FF;
-  --brand-dark: #1739B8;
-  --accent: #FF7A45;
-  --success: #16A34A;
-  --success-bg: #E8F8EE;
-  --warning: #D97706;
-  --warning-bg: #FEF3E2;
-  --danger: #DC2626;
-  --danger-bg: #FDEAEA;
+  --ink: #f4f7fb;
+  --ink-soft: #9aa7ba;
 
-  --font-display: 'Space Grotesk', sans-serif;
-  --font-body: 'Inter', sans-serif;
-  --font-data: 'IBM Plex Mono', monospace;
+  --surface: #070b12;
+  --surface-2: #0b111b;
+  --card: #101722;
+  --card-hover: #141d2a;
 
-  --radius: 10px;
-  --shadow-sm: 0 1px 2px rgba(15, 27, 45, 0.06);
-  --shadow-md: 0 4px 16px rgba(15, 27, 45, 0.08);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-bright: rgba(255, 255, 255, 0.15);
+
+  --brand: #6c7cff;
+  --brand-dark: #4d5ee8;
+  --accent: #8b5cf6;
+
+  --success: #2dd4a8;
+  --success-bg: rgba(45, 212, 168, 0.12);
+
+  --warning: #f5b942;
+  --warning-bg: rgba(245, 185, 66, 0.12);
+
+  --danger: #ff647c;
+  --danger-bg: rgba(255, 100, 124, 0.12);
+
+  --font-display: 'Manrope', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-data: 'JetBrains Mono', monospace;
+
+  --radius: 16px;
+  --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.18);
+  --shadow-md: 0 12px 40px rgba(0, 0, 0, 0.3);
+  --glow: 0 0 30px rgba(108, 124, 255, 0.12);
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--surface);
+}
 
 body {
   margin: 0;
-  background: var(--surface);
+  min-height: 100vh;
+  background:
+    radial-gradient(
+      circle at 15% 10%,
+      rgba(108, 124, 255, 0.08),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 85% 80%,
+      rgba(139, 92, 246, 0.06),
+      transparent 30%
+    ),
+    var(--surface);
   color: var(--ink);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4 {
-  font-family: var(--font-display);
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  margin: 0;
+button,
+input,
+select,
+textarea {
+  font: inherit;
 }
 
-a { color: var(--brand); text-decoration: none; }
-a:hover { text-decoration: underline; }
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+h1 {
+  font-size: 36px;
+}
+
+h2 {
+  font-size: 26px;
+}
+
+h3 {
+  font-size: 19px;
+}
+
+a {
+  color: var(--brand);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: #a7b0ff;
+  text-decoration: none;
+}
+
+/* ============================================================
+   Layout
+   ============================================================ */
 
 .container {
-  max-width: 1180px;
+  max-width: 1240px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 28px;
 }
 
-/* ---------- Buttons ---------- */
+/* ============================================================
+   Buttons
+   ============================================================ */
+
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  font-family: var(--font-body);
-  font-weight: 600;
-  font-size: 14px;
-  padding: 10px 18px;
-  border-radius: var(--radius);
-  border: 1px solid transparent;
-  cursor: pointer;
-  transition: transform 0.06s ease, box-shadow 0.15s ease, background 0.15s ease;
-}
-.btn:active { transform: translateY(1px); }
-.btn-primary { background: var(--brand); color: #fff; }
-.btn-primary:hover { background: var(--brand-dark); text-decoration: none; }
-.btn-accent { background: var(--accent); color: #fff; }
-.btn-accent:hover { background: #E8632E; text-decoration: none; }
-.btn-outline { background: transparent; border-color: var(--border); color: var(--ink); }
-.btn-outline:hover { border-color: var(--brand); color: var(--brand); text-decoration: none; }
-.btn-danger { background: var(--danger-bg); color: var(--danger); }
-.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  gap: 8px;
 
-/* ---------- Cards ---------- */
+  min-height: 42px;
+  padding: 10px 18px;
+
+  border: 1px solid transparent;
+  border-radius: 11px;
+
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  color: #fff;
+  background: linear-gradient(
+    135deg,
+    var(--brand),
+    var(--accent)
+  );
+
+  box-shadow:
+    0 8px 24px rgba(108, 124, 255, 0.22);
+}
+
+.btn-primary:hover {
+  color: #fff;
+
+  box-shadow:
+    0 10px 30px rgba(108, 124, 255, 0.35);
+}
+
+.btn-accent {
+  color: #fff;
+  background: linear-gradient(
+    135deg,
+    #8b5cf6,
+    #6c7cff
+  );
+
+  box-shadow:
+    0 8px 24px rgba(139, 92, 246, 0.22);
+}
+
+.btn-accent:hover {
+  color: #fff;
+
+  box-shadow:
+    0 10px 30px rgba(139, 92, 246, 0.35);
+}
+
+.btn-outline {
+  color: var(--ink-soft);
+  background: rgba(255, 255, 255, 0.025);
+  border-color: var(--border);
+}
+
+.btn-outline:hover {
+  color: var(--ink);
+  border-color: rgba(108, 124, 255, 0.45);
+  background: rgba(108, 124, 255, 0.07);
+}
+
+.btn-danger {
+  color: var(--danger);
+  background: var(--danger-bg);
+  border-color: rgba(255, 100, 124, 0.15);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ============================================================
+   Cards
+   ============================================================ */
+
 .card {
-  background: var(--card);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.045),
+      rgba(255, 255, 255, 0.018)
+    ),
+    var(--card);
+
   border: 1px solid var(--border);
   border-radius: var(--radius);
+
   box-shadow: var(--shadow-sm);
+
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  transition:
+    transform 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease;
 }
 
-/* ---------- Forms ---------- */
-.field { margin-bottom: 16px; }
+.card:hover {
+  border-color: var(--border-bright);
+  box-shadow:
+    var(--shadow-md),
+    var(--glow);
+}
+
+/* ============================================================
+   Forms
+   ============================================================ */
+
+.field {
+  margin-bottom: 18px;
+}
+
 .field label {
   display: block;
-  font-size: 13px;
-  font-weight: 600;
+
+  margin-bottom: 7px;
+
   color: var(--ink-soft);
-  margin-bottom: 6px;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
-.field input, .field select, .field textarea {
+
+.field input,
+.field select,
+.field textarea {
   width: 100%;
-  padding: 10px 12px;
-  border-radius: 8px;
+
+  padding: 12px 14px;
+
   border: 1px solid var(--border);
+  border-radius: 11px;
+
+  outline: none;
+
+  background: rgba(255, 255, 255, 0.035);
+  color: var(--ink);
+
   font-family: var(--font-body);
   font-size: 14px;
-  background: #fff;
-  color: var(--ink);
-}
-.field input:focus, .field select:focus, .field textarea:focus {
-  outline: none;
-  border-color: var(--brand);
-  box-shadow: 0 0 0 3px rgba(36, 84, 255, 0.12);
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
 }
 
-/* ---------- Badges (order status, stock) ---------- */
+.field input::placeholder,
+.field textarea::placeholder {
+  color: #647187;
+}
+
+.field input:hover,
+.field select:hover,
+.field textarea:hover {
+  border-color: var(--border-bright);
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: rgba(108, 124, 255, 0.7);
+
+  background: rgba(108, 124, 255, 0.045);
+
+  box-shadow:
+    0 0 0 3px rgba(108, 124, 255, 0.1),
+    0 0 24px rgba(108, 124, 255, 0.06);
+}
+
+/* ============================================================
+   Badges
+   ============================================================ */
+
 .badge {
-  display: inline-block;
-  font-size: 12px;
-  font-weight: 600;
-  font-family: var(--font-data);
-  padding: 3px 9px;
-  border-radius: 999px;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-}
-.badge-success { background: var(--success-bg); color: var(--success); }
-.badge-warning { background: var(--warning-bg); color: var(--warning); }
-.badge-danger { background: var(--danger-bg); color: var(--danger); }
-.badge-neutral { background: #EEF1F5; color: var(--ink-soft); }
+  display: inline-flex;
+  align-items: center;
 
-/* ---------- Price (signature element: mono figures + accent tag) ---------- */
+  padding: 5px 10px;
+
+  border-radius: 999px;
+
+  font-family: var(--font-data);
+  font-size: 10px;
+  font-weight: 600;
+
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  border: 1px solid transparent;
+}
+
+.badge-success {
+  color: var(--success);
+  background: var(--success-bg);
+  border-color: rgba(45, 212, 168, 0.16);
+}
+
+.badge-warning {
+  color: var(--warning);
+  background: var(--warning-bg);
+  border-color: rgba(245, 185, 66, 0.16);
+}
+
+.badge-danger {
+  color: var(--danger);
+  background: var(--danger-bg);
+  border-color: rgba(255, 100, 124, 0.16);
+}
+
+.badge-neutral {
+  color: var(--ink-soft);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--border);
+}
+
+/* ============================================================
+   Prices
+   ============================================================ */
+
 .price {
+  color: var(--ink);
+
   font-family: var(--font-data);
   font-weight: 600;
-  color: var(--ink);
+  letter-spacing: -0.03em;
 }
+
 .price-tag {
   display: inline-flex;
   align-items: baseline;
-  gap: 2px;
+  gap: 3px;
+
+  color: #a7b0ff;
+
   font-family: var(--font-data);
   font-weight: 600;
-  color: var(--accent);
+  letter-spacing: -0.025em;
 }
 
-/* ---------- Data / KPI numbers ---------- */
+/* ============================================================
+   KPI / Analytics
+   ============================================================ */
+
 .kpi-value {
+  color: #fff;
+
   font-family: var(--font-data);
   font-size: 30px;
   font-weight: 600;
-  color: var(--ink);
-}
-.kpi-label {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--ink-soft);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+
+  letter-spacing: -0.04em;
 }
 
-/* ---------- Utility ---------- */
-.flex { display: flex; }
-.flex-between { display: flex; align-items: center; justify-content: space-between; }
-.grid { display: grid; gap: 20px; }
-.muted { color: var(--ink-soft); }
-.text-center { text-align: center; }
-.mt-24 { margin-top: 24px; }
-.mb-16 { margin-bottom: 16px; }
+.kpi-label {
+  color: #77859b;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ============================================================
+   Utility
+   ============================================================ */
+
+.flex {
+  display: flex;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.grid {
+  display: grid;
+  gap: 20px;
+}
+
+.muted {
+  color: var(--ink-soft);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mt-24 {
+  margin-top: 24px;
+}
+
+.mb-16 {
+  margin-bottom: 16px;
+}
+
+/* ============================================================
+   Scrollbar
+   ============================================================ */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #252f40;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #354157;
+}
+
+/* ============================================================
+   Selection
+   ============================================================ */
+
+::selection {
+  background: rgba(108, 124, 255, 0.3);
+  color: #fff;
+}
+
+/* ============================================================
+   Reduced Motion
+   ============================================================ */
 
 @media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; animation: none !important; }
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 16px;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+
+  h2 {
+    font-size: 23px;
+  }
+
+  .btn {
+    padding: 9px 14px;
+  }
 }
